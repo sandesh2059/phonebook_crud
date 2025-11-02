@@ -47,3 +47,14 @@ def edit_contact(name):
     else:
         flash('Contact not found!', 'error')
         return redirect('/')
+
+@app.route('/delete/<name>')
+def delete_contact(name):
+    success, message = ContactService.delete_contact(name)
+    
+    if success:
+        flash(message, 'success')
+    else:
+        flash(message, 'error')
+    
+    return redirect('/')
