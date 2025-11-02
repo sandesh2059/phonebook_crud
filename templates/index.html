@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phone Book</title>
+    <style>
+        body { font-family: Arial; margin: 40px; }
+        .contact { background: #f0f0f0; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; padding: 10px; color: #155724; border-radius: 5px; }
+        .error { background: #f8d7da; padding: 10px; color: #721c24; border-radius: 5px; }
+        .btn { padding: 8px 15px; text-decoration: none; border-radius: 4px; margin: 5px; display: inline-block; }
+        .add { background: #007bff; color: white; }
+        .edit { background: #ffc107; color: black; }
+        .delete { background: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+    <h1>📞 Phone Book</h1>
+    
+    <a href="/add" class="btn add">Add New Contact</a>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <h2>All Contacts:</h2>
+    
+    {% if contacts %}
+        {% for name, phone in contacts.items() %}
+        <div class="contact">
+            <strong>{{ name }}</strong><br>
+            Phone: {{ phone }}<br>
+            <a href="/edit/{{ name }}" class="btn edit">Edit</a>
+            <a href="/delete/{{ name }}" class="btn delete" onclick="return confirm('Delete {{ name }}?')">Delete</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No contacts found. Add your first contact!</p>
+    {% endif %}
+</body>
+</html>
