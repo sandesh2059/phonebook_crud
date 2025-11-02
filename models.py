@@ -45,3 +45,10 @@ def get_all_contacts():
     Returns: Dictionary of all contacts
     """
     return load_contacts()
+def get_contact(name):
+    """
+    Get specific contact
+    Returns: Contact data if found, None otherwise
+    """
+    contacts = load_contacts()
+    return contacts.get(name)
