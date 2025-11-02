@@ -27,3 +27,15 @@ def save_contacts(contacts):
     """
     with open(DATA_FILE, 'w') as f:
         json.dump(contacts, f, indent=2)
+        def add_contact(name, phone):
+    """
+    Add a new contact
+    Returns: (success, message)
+    """
+    contacts = load_contacts()
+    if name in contacts:
+        return False, 'Contact already exists!'
+    
+    contacts[name] = phone
+    save_contacts(contacts)
+    return True, 'Contact added successfully!'
