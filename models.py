@@ -39,3 +39,9 @@ def save_contacts(contacts):
     contacts[name] = phone
     save_contacts(contacts)
     return True, 'Contact added successfully!'
+def get_all_contacts():
+    """
+    Get all contacts
+    Returns: Dictionary of all contacts
+    """
+    return load_contacts()
