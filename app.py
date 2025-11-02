@@ -1,19 +1,26 @@
+"""
+Web Layer - Handles web routes and user interface
+Team Member 3: Web Interface
+"""
 from flask import Flask, render_template, request, redirect, flash
 from services import ContactService
 
 app = Flask(__name__)
 app.secret_key = 'abc123'
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
 @app.route('/')
 def home():
+    """
+    Home page - displays all contacts
+    """
     contacts = ContactService.get_all_contacts()
     return render_template('index.html', contacts=contacts)
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_contact():
+    """
+    Add new contact - handles form submission
+    """
     if request.method == 'POST':
         name = request.form['name']
         phone = request.form['phone']
@@ -30,6 +37,9 @@ def add_contact():
 
 @app.route('/edit/<name>', methods=['GET', 'POST'])
 def edit_contact(name):
+    """
+    Edit existing contact
+    """
     if request.method == 'POST':
         new_phone = request.form['phone']
         
@@ -41,6 +51,7 @@ def edit_contact(name):
         else:
             flash(message, 'error')
     
+    # GET request - show current data
     contact_phone = ContactService.get_contact(name)
     if contact_phone:
         return render_template('edit.html', name=name, phone=contact_phone)
@@ -50,6 +61,9 @@ def edit_contact(name):
 
 @app.route('/delete/<name>')
 def delete_contact(name):
+    """
+    Delete contact
+    """
     success, message = ContactService.delete_contact(name)
     
     if success:
@@ -58,3 +72,6 @@ def delete_contact(name):
         flash(message, 'error')
     
     return redirect('/')
+
+if __name__ == '__main__':
+    app.run(debug=True)
