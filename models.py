@@ -19,3 +19,11 @@ def load_contacts():
         except json.JSONDecodeError:
             return {}
     return {}
+
+def save_contacts(contacts):
+    """
+    Save contacts to JSON file
+    Args: contacts - Dictionary of contacts to save
+    """
+    with open(DATA_FILE, 'w') as f:
+        json.dump(contacts, f, indent=2)
