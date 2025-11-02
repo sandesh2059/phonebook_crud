@@ -27,3 +27,23 @@ def add_contact():
             flash(message, 'error')
     
     return render_template('add.html')
+
+@app.route('/edit/<name>', methods=['GET', 'POST'])
+def edit_contact(name):
+    if request.method == 'POST':
+        new_phone = request.form['phone']
+        
+        success, message = ContactService.update_contact(name, new_phone)
+        
+        if success:
+            flash(message, 'success')
+            return redirect('/')
+        else:
+            flash(message, 'error')
+    
+    contact_phone = ContactService.get_contact(name)
+    if contact_phone:
+        return render_template('edit.html', name=name, phone=contact_phone)
+    else:
+        flash('Contact not found!', 'error')
+        return redirect('/')
