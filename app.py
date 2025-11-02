@@ -1,7 +1,3 @@
-"""
-Web Layer - Handles web routes and user interface
-Team Member 3: Web Interface
-"""
 from flask import Flask, render_template, request, redirect, flash
 from services import ContactService
 
