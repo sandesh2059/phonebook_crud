@@ -2,29 +2,35 @@
 <html>
 <head>
     <title>Add Contact</title>
+    <style>
+        body { font-family: Arial; margin: 40px; }
+        input { padding: 8px; margin: 5px; width: 300px; }
+        .btn { 
+            padding: 8px 15px; 
+            text-decoration: none; 
+            border-radius: 4px; 
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .save { background: #28a745; color: white; }
+        .cancel { background: #6c757d; color: white; }
+    </style>
 </head>
 <body>
     <h1>Add New Contact</h1>
-</body>
-</html>
-    <form method="POST">
+    
+    <form method="POST" action="/add">
         <div>
             <input type="text" name="name" placeholder="Enter name" required>
         </div>
         <div>
             <input type="text" name="phone" placeholder="Enter phone number" required>
         </div>
-    </form>
         <div>
-            <button type="submit">Save Contact</button>
-            <a href="/">Cancel</a>
+            <button type="submit" class="btn save">Save Contact</button>
+            <a href="/" class="btn cancel">Cancel</a>
         </div>
-    <style>
-        body { font-family: Arial; margin: 40px; }
-        input { padding: 8px; margin: 5px; width: 300px; }
-    </style>
-    <style>
-        .btn { padding: 8px 15px; text-decoration: none; border-radius: 4px; }
-        .save { background: #28a745; color: white; }
-        .cancel { background: #6c757d; color: white; }
-    </style>
+    </form>
+</body>
+</html>
