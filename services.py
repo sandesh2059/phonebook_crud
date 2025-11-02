@@ -26,7 +26,7 @@ class ContactService:
         Create new contact with validation
         Returns: (success, message)
         """
-        # Validate data
+        
         is_valid, error_msg = ContactService.validate_contact_data(name, phone)
         if not is_valid:
             return False, error_msg
@@ -49,3 +49,16 @@ class ContactService:
         Returns: Contact data if found, None otherwise
         """
         return get_contact(name)
+        @staticmethod
+    def update_contact(name, new_phone):
+        if not new_phone or not new_phone.strip():
+            return False, "Phone cannot be empty!"
+        
+        if not new_phone.strip().isdigit():
+            return False, "Phone should contain only numbers!"
+        
+        return update_contact(name, new_phone.strip())
+    
+    @staticmethod
+    def delete_contact(name):
+        return delete_contact(name)
