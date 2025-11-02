@@ -52,3 +52,16 @@ def get_contact(name):
     """
     contacts = load_contacts()
     return contacts.get(name)
+
+def update_contact(name, new_phone):
+    """
+    Update existing contact
+    Returns: (success, message)
+    """
+    contacts = load_contacts()
+    if name not in contacts:
+        return False, 'Contact not found!'
+    
+    contacts[name] = new_phone
+    save_contacts(contacts)
+    return True, 'Contact updated successfully!'
