@@ -10,6 +10,9 @@ class TestPhoneBook(unittest.TestCase):
         global DATA_FILE
         self.original_data_file = DATA_FILE
         DATA_FILE = self.test_file
+        # Clear test file before each test
+        if os.path.exists(self.test_file):
+            os.remove(self.test_file)
     
     def tearDown(self):
         if os.path.exists(self.test_file):
