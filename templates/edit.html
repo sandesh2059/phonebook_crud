@@ -5,20 +5,27 @@
     <style>
         body { font-family: Arial; margin: 40px; }
         input { padding: 8px; margin: 5px; width: 300px; }
-        .btn { padding: 8px 15px; text-decoration: none; border-radius: 4px; }
+        .btn { 
+            padding: 8px 15px; 
+            text-decoration: none; 
+            border-radius: 4px; 
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
         .update { background: #ffc107; color: black; }
         .cancel { background: #6c757d; color: white; }
     </style>
 </head>
 <body>
-    <h1>Edit Contact: {{ name }}</h1>
+    <h1>Edit Contact</h1>
     
     <form method="POST">
         <div>
-            <input type="text" name="name" value="{{ name }}" required>
+            <input type="text" name="new_name" value="{{ name }}" required>
         </div>
         <div>
-            <input type="text" name="phone" value="{{ phone }}" required>
+            <input type="text" name="new_phone" value="{{ phone }}" required>
         </div>
         <div>
             <button type="submit" class="btn update">Update Contact</button>

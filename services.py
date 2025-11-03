@@ -47,3 +47,7 @@ class ContactService:
     @staticmethod
     def delete_contact(name):
         return delete_contact(name)
+    
+    @staticmethod
+    def save_contacts(contacts):
+        save_contacts(contacts)

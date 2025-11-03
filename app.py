@@ -6,48 +6,49 @@ app.secret_key = 'abc123'
 
 @app.route('/')
 def home():
-    """
-    Home page - displays all contacts
-    """
     contacts = ContactService.get_all_contacts()
     return render_template('index.html', contacts=contacts)
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_contact():
-    """
-    Add new contact - handles form submission
-    """
     if request.method == 'POST':
         name = request.form['name']
         phone = request.form['phone']
-        
         success, message = ContactService.create_contact(name, phone)
-        
         if success:
             flash(message, 'success')
             return redirect('/')
         else:
             flash(message, 'error')
-    
     return render_template('add.html')
 
 @app.route('/edit/<name>', methods=['GET', 'POST'])
 def edit_contact(name):
-    """
-    Edit existing contact
-    """
     if request.method == 'POST':
-        new_phone = request.form['phone']
+        new_name = request.form['new_name']
+        new_phone = request.form['new_phone']
         
-        success, message = ContactService.update_contact(name, new_phone)
+        contacts = ContactService.get_all_contacts()
         
-        if success:
-            flash(message, 'success')
-            return redirect('/')
+        # If name changed, we need to delete old and create new
+        if new_name != name:
+            if new_name in contacts:
+                flash('Contact name already exists!', 'error')
+                return render_template('edit.html', name=name, phone=contacts[name])
+            
+            # Delete old contact and create new one
+            del contacts[name]
+            contacts[new_name] = new_phone
+            ContactService.save_contacts(contacts)
+            flash('Contact updated successfully!', 'success')
         else:
-            flash(message, 'error')
+            # Just update phone if name didn't change
+            contacts[name] = new_phone
+            ContactService.save_contacts(contacts)
+            flash('Contact updated successfully!', 'success')
+        
+        return redirect('/')
     
-    # GET request - show current data
     contact_phone = ContactService.get_contact(name)
     if contact_phone:
         return render_template('edit.html', name=name, phone=contact_phone)
@@ -57,16 +58,11 @@ def edit_contact(name):
 
 @app.route('/delete/<name>')
 def delete_contact(name):
-    """
-    Delete contact
-    """
     success, message = ContactService.delete_contact(name)
-    
     if success:
         flash(message, 'success')
     else:
         flash(message, 'error')
-    
     return redirect('/')
 
 if __name__ == '__main__':
